@@ -6,8 +6,9 @@ import { postBlog } from "./actions";
 import PostForm from "../components/PostForm";
 
 async function AuthedContent() {
+    const requestHeaders = await headers(); // opts this component into request-time rendering
     const auth = await initAuth();
-    const session = await auth.api.getSession({ headers: await headers() });
+    const session = await auth.api.getSession({ headers: requestHeaders });
 
     if (!session || session.user.email !== process.env.ADMIN_EMAIL) redirect("/");
 
